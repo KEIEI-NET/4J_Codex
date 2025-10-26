@@ -1,0 +1,3 @@
+{"caseId":"CASS-14","type":"RuleHit","ruleId":"NO_LIMIT","severity":"high","message":"SELECT on audit_summary lacks LIMIT","evidence":{"cql":"SELECT * FROM ks.audit_summary WHERE tenant_id = ? AND category = ?;"}}
+{"caseId":"CASS-14","type":"RuleHit","ruleId":"NO_PAGING","severity":"high","message":"Statement executes without page size configuration","evidence":{"pageSize":null}}
+{"caseId":"CASS-14","type":"RuleHit","ruleId":"SECONDARY_INDEX_LIMIT","severity":"high","message":"Secondary index query must specify LIMIT and paging","evidence":{"cql":"SELECT * FROM ks.audit_summary WHERE tenant_id = ? AND category = ?;"}} 

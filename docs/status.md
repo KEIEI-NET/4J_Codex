@@ -26,6 +26,10 @@
   - `implementation_plan.md` にスプリント計画と進捗表。
   - `AGENT.md` に運用ルール・コマンド・テスト手順。
   - `todo.md` に残タスクとチェック状況を反映。
+- **TypeScript / Go / C# 解析器（L1）**
+  - `packages/parsers/typescript`: ts-morph による `File` / `Import` / `Symbol` / `Call` Facts 抽出と Vitest テストを追加。
+  - `packages/parsers/go`: `go/parser` + AST で import・関数・呼び出しを検出し JSONL を出力する CLI を実装。
+  - `packages/parsers/csharp`: Roslyn (Microsoft.CodeAnalysis) で型・メソッド・呼び出しを解析し、`System.CommandLine` CLI から Facts を生成。
 - **ローカルスタック (Docker Compose)**
   - `docker-compose.yml` で Neo4j / OpenSearch / API / UI / Worker を定義し、profiles で必要なサービスを選択起動。
   - `.env.example` による認証・メモリ設定のテンプレートを追加。
@@ -43,7 +47,8 @@
   - CI/CD パイプラインと連動した実行手順。
 
 - **ルールエンジン・UI など L1 以降の機能**
-  - TypeScript / Go / C# 解析器、UI、Graph API などは未実装。
+  - TypeScript / Go / C# 解析器は L1（記号抽出・呼び出し検出）まで実装済み。今後は DI / DB クエリなど領域固有の Facts 拡張が必要。
+  - UI、Graph API などは未実装。
 
 ## 参考リソース
 - `README.md` — セットアップとクイックスタート。

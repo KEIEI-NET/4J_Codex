@@ -1,0 +1,2 @@
+{"caseId":"CASS-02","type":"DBQuery","origin":{"file":"src/notification/NotificationHistoryDao.java","line":88},"payload":{"cql":"SELECT * FROM ks.events WHERE tenant_id=? AND user_id=? AND ts > ?;","operation":"SELECT","parameters":["tenant_id","user_id","ts"],"limit":null,"pagingState":null}}
+{"caseId":"CASS-02","type":"ExecutionConfig","payload":{"pageSize":null,"consistency":"LOCAL_ONE"}}

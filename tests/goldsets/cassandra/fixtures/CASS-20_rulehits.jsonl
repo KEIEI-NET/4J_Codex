@@ -1,0 +1,2 @@
+{"caseId":"CASS-20","type":"RuleHit","ruleId":"WIDE_PARTITION","severity":"high","message":"Partition tenant_id=acme holds 2000000 rows (480MB)","evidence":{"table":"ks.audit_events","rowCount":2000000,"sizeMb":480}}
+{"caseId":"CASS-20","type":"RuleHit","ruleId":"ORDER_BY_SKEW","severity":"low","message":"ORDER BY ts ASC conflicts with clustering order DESC","evidence":{"clusterOrder":"DESC","requestedOrder":"ASC","cql":"SELECT tenant_id, ts, event_id FROM ks.audit_events WHERE tenant_id = ? ORDER BY ts ASC LIMIT 500;"}} 

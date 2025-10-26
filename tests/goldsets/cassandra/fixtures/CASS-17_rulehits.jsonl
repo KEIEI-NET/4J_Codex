@@ -1,0 +1,1 @@
+{"caseId":"CASS-17","type":"RuleHit","ruleId":"READ_REPAIR_MISMATCH","severity":"medium","message":"Read repair chance 0.2 with consistency mismatch","evidence":{"table":"ks.user_cache","readRepairChance":0.2,"readConsistency":"LOCAL_QUORUM","writeConsistency":"LOCAL_ONE"}}

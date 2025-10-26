@@ -1,0 +1,1 @@
+{"caseId":"CASS-10","type":"DBQuery","origin":{"file":"jobs/JobLogFetcher.java","line":90},"payload":{"cql":"SELECT * FROM ks.job_logs WHERE job_id = ?","operation":"SELECT","timeoutMillis":null,"pageSize":null}}

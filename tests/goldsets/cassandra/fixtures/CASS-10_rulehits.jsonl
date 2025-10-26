@@ -1,0 +1,1 @@
+{"caseId":"CASS-10","type":"RuleHit","ruleId":"NO_TIMEOUT","severity":"medium","message":"Statement executed without read timeout configuration","evidence":{"statement":"SELECT * FROM ks.job_logs WHERE job_id = ?"}}

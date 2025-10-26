@@ -1,0 +1,2 @@
+{"caseId":"CASS-07","type":"DBQuery","origin":{"file":"jobs/CleanupJob.java","line":64},"payload":{"cql":"DELETE FROM ks.event_history WHERE tenant_id = ? AND bucket IN (0, 1, 2, 3) AND ts < minTimeuuid(?);","operation":"DELETE","tombstoneRisk":"high","predicateColumns":["tenant_id","bucket","ts"]}}
+{"caseId":"CASS-07","type":"JobConfig","payload":{"job":"NightlyEventCleanup","batchSize":10000,"ttlStrategy":"none"}}

@@ -1,0 +1,2 @@
+{"caseId":"CASS-13","type":"RuleHit","ruleId":"ALLOW_FILTERING","severity":"high","message":"ALLOW FILTERING with secondary index query","evidence":{"file":"service/OrderLookupService.java","line":88}}
+{"caseId":"CASS-13","type":"RuleHit","ruleId":"ALLOW_FILTERING_BUILDER","severity":"medium","message":"QueryBuilder#allowFiltering detected in service layer","evidence":{"builder":"QueryBuilder","method":"allowFiltering"}}

@@ -1,0 +1,1 @@
+{"caseId":"CASS-12","type":"RuleHit","ruleId":"IN_LIST_FANOUT","severity":"medium","message":"IN clause contains 240 values which will fan out into multiple queries","evidence":{"column":"user_id","inListLength":240}}

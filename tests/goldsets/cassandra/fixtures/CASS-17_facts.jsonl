@@ -1,0 +1,2 @@
+{"caseId":"CASS-17","type":"ConsistencyUsage","origin":{"file":"jobs/UserCacheRefresher.java","line":58},"payload":{"table":"ks.user_cache","readConsistency":"LOCAL_QUORUM","writeConsistency":"LOCAL_ONE","readRepairRate":180}}
+{"caseId":"CASS-17","type":"TableConfig","payload":{"table":"ks.user_cache","readRepairChance":0.2,"dcReplication":{"dc1":3}}}

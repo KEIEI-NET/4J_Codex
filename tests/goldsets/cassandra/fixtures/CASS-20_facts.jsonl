@@ -1,0 +1,2 @@
+{"caseId":"CASS-20","type":"PartitionSize","payload":{"table":"ks.audit_events","partitionKey":"tenant_id=acme","rowCount":2000000,"sizeMb":480}}
+{"caseId":"CASS-20","type":"DBQuery","origin":{"file":"export/AuditExportJob.java","line":140},"payload":{"cql":"SELECT tenant_id, ts, event_id FROM ks.audit_events WHERE tenant_id = ? ORDER BY ts ASC LIMIT 500;","operation":"SELECT","parameters":["tenant_id"],"orderBy":[{"column":"ts","direction":"ASC"}],"clusteringOrder":["ts DESC"],"limit":500,"timeoutMillis":2000}}

@@ -1,0 +1,2 @@
+{"caseId":"CASS-06","type":"DBQuery","origin":{"file":"src/audit/AuditLogSearcher.java","line":102},"payload":{"cql":"SELECT * FROM ks.audit_logs WHERE tenant_id = ? AND message LIKE '%failed%' ALLOW FILTERING;","operation":"SELECT","allowFiltering":true,"predicates":[{"column":"tenant_id","operator":"="},{"column":"message","operator":"LIKE"}],"secondaryIndexUsed":true}}
+{"caseId":"CASS-06","type":"TableSchema","payload":{"keyspace":"ks","table":"audit_logs","secondaryIndexes":["audit_logs_message_idx"]}}

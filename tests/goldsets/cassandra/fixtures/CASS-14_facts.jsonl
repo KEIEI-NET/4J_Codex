@@ -1,0 +1,2 @@
+{"caseId":"CASS-14","type":"DBQuery","origin":{"file":"reports/AuditSummaryDao.java","line":52},"payload":{"cql":"SELECT * FROM ks.audit_summary WHERE tenant_id = ? AND category = ?;","operation":"SELECT","parameters":["tenant_id","category"],"secondaryIndexUsed":true,"limit":null}}
+{"caseId":"CASS-14","type":"ExecutionConfig","payload":{"pageSize":null}}

@@ -1,0 +1,1 @@
+{"caseId":"CASS-03","type":"RuleHit","ruleId":"CONSISTENCY_MISMATCH","severity":"high","message":"Read at ALL while writes occur at ONE","evidence":{"readConsistency":"ALL","writeConsistency":"ONE"}}

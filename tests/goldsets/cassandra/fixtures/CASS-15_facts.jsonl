@@ -1,0 +1,2 @@
+{"caseId":"CASS-15","type":"LwtUsage","origin":{"file":"jobs/ProfileSyncJob.java","line":120},"payload":{"table":"ks.user_profile","lwtPerSecond":2200,"lwtToTotalRatio":0.75,"sampleWindowSeconds":60}}
+{"caseId":"CASS-15","type":"Mutation","origin":{"file":"jobs/ProfileSyncJob.java","line":118},"payload":{"operation":"INSERT","ifCondition":true,"idempotent":false,"table":"ks.user_profile"}}

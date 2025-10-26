@@ -1,0 +1,2 @@
+{"caseId":"CASS-16","type":"DBQuery","origin":{"file":"service/OrderReportService.java","line":112},"payload":{"cql":"SELECT order_id, status, updated_at FROM ks.orders WHERE tenant_id = ? AND updated_at > ? ALLOW FILTERING;","operation":"SELECT","allowFiltering":true,"parameters":["tenant_id","updated_at"],"joinLike":true,"materializedViewExists":false}}
+{"caseId":"CASS-16","type":"TableSchema","payload":{"keyspace":"ks","table":"orders","partitionKeys":["tenant_id"],"materializedViews":[]}}

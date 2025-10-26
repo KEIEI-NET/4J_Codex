@@ -1,0 +1,1 @@
+{"caseId":"CASS-05","type":"RuleHit","ruleId":"MISSING_PREPARE","severity":"low","message":"SimpleStatement executed repeatedly without prepare/bind","evidence":{"executions":50000,"statementKind":"SimpleStatement"}}

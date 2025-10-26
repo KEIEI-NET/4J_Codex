@@ -1,0 +1,2 @@
+{"caseId":"CASS-16","type":"RuleHit","ruleId":"ALLOW_FILTERING","severity":"high","message":"ALLOW FILTERING with secondary index query","evidence":{"file":"service/OrderReportService.java","line":112}}
+{"caseId":"CASS-16","type":"RuleHit","ruleId":"MV_MISSING","severity":"medium","message":"Join-like access without materialized view","evidence":{"table":"orders","suggestedView":"orders_by_status"}}

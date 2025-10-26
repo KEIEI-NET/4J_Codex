@@ -1,0 +1,2 @@
+{"caseId":"CASS-01","type":"DBQuery","origin":{"file":"src/user/UserEventDao.java","line":142},"payload":{"cql":"SELECT * FROM ks.events WHERE kind='login' ALLOW FILTERING;","operation":"SELECT","allowFiltering":true,"parameters":[]}}
+{"caseId":"CASS-01","type":"TableSchema","payload":{"keyspace":"ks","table":"events","partitionKeys":["tenant_id","user_id"],"clusteringKeys":["kind","ts"]}}

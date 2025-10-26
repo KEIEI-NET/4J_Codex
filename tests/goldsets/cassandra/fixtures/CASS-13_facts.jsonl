@@ -1,0 +1,1 @@
+{"caseId":"CASS-13","type":"DBQuery","origin":{"file":"service/OrderLookupService.java","line":88},"payload":{"cql":"SELECT * FROM ks.orders WHERE tenant_id = ? AND status = ? ALLOW FILTERING","operation":"SELECT","allowFiltering":true,"parameters":["tenant_id","status"],"builder":"QueryBuilder","builderMethod":"allowFiltering","limit":500}}

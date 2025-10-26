@@ -1,0 +1,2 @@
+{"caseId":"CASS-09","type":"RetryPolicy","origin":{"file":"src/balance/RetryPolicies.java","line":27},"payload":{"policyClass":"AggressiveRetryPolicy","onWriteTimeout":"retry","maxAttempts":5}}
+{"caseId":"CASS-09","type":"Mutation","origin":{"file":"src/balance/BalanceService.java","line":73},"payload":{"operation":"UPDATE","idempotent":false,"table":"ks.user_balance"}}

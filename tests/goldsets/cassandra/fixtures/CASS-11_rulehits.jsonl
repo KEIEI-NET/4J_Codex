@@ -1,0 +1,1 @@
+{"caseId":"CASS-11","type":"RuleHit","ruleId":"HOT_PARTITION","severity":"high","message":"Partition tenant_id=t-critical,metric_id=cpu receives 65% of write load","evidence":{"partitionKey":"tenant_id=t-critical,metric_id=cpu","writesPerSecond":1100,"shareOfCluster":0.65}}

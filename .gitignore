@@ -11,3 +11,4 @@ tmp/
 target/
 vitest.config.ts.timestamp-*
 /src/
+.serena/

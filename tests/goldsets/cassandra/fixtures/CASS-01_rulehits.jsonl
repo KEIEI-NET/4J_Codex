@@ -1,0 +1,2 @@
+{"caseId":"CASS-01","type":"RuleHit","ruleId":"ALLOW_FILTERING","severity":"critical","message":"ALLOW FILTERING on events without partition predicates","evidence":{"file":"src/user/UserEventDao.java","line":142,"queryHash":"c1a9f"}}
+{"caseId":"CASS-01","type":"RuleHit","ruleId":"MISSING_PK","severity":"critical","message":"Partition keys tenant_id/user_id missing from WHERE clause","evidence":{"missingKeys":["tenant_id","user_id"]}}

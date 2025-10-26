@@ -26,11 +26,12 @@
 - [x] Facts JSONL 出力（stderr メトリクス整備は今後）
 - [ ] AST パターン単体テスト（呼び出し/CQL/DI）
   - [x] Spring DI パターンの単体テスト整備
-  - [ ] Cassandra CQL 抽出ケース拡充
+  - [x] Cassandra CQL 抽出ケース拡充
 
 ### TypeScript (L1)
 
-- [ ] ts-morph ベースの AST 解析器骨組み
+- [x] CLI スケルトン & スタブ解析コマンド
+- [x] ts-morph ベースの AST 解析器骨組み
 - [ ] Angular DI・Router 解析
 - [ ] HttpClient 呼び出し→`CALLS_HTTP` 生成
 - [ ] cassandra-driver クエリ抽出
@@ -38,14 +39,16 @@
 
 ### Go (L1)
 
-- [ ] go/packages 解析パイプライン
+- [x] CLI スケルトン & スタブ解析コマンド
+- [x] go/parser / AST ベースの L1 Facts 抽出
 - [ ] インタフェース実装解決ロジック
 - [ ] gocql クエリ抽出・Consistency/PageSize 解析
 - [ ] テスト（CallExpr 展開、CQL ケース）
 
 ### C# (L1)
 
-- [ ] Roslyn ワークスペース設定
+- [x] CLI スケルトン & スタブ解析コマンド
+- [x] Roslyn ワークスペース設定・型/メソッド/呼び出し解析
 - [ ] ServiceCollection / DI 解析
 - [ ] DataStax C# Driver 呼び出し抽出
 - [ ] テスト（DI、CQL ライブラリケース）
@@ -56,6 +59,10 @@
 - [ ] Cassandra 主要ルール（ALLOW_FILTERING, MISSING_PK, NO_LIMIT）実装
 - [ ] LWT/BATCH 微分則（LWT-R1〜R3, BAT-R1〜R4）実装
 - [ ] RuleHit JSONL 出力テスト
+- [x] Cassandra ゴールドセット初期ケース（CASS-01..10）整備
+- [x] Cassandra ゴールドセット検証スクリプト追加（`npm run -w packages/rules-engine validate:cassandra`）
+- [x] Cassandra 追加ルール実装（HOT_PARTITION, IN_LIST_FANOUT, ALLOW_FILTERING_BUILDER ほか）
+- [x] Cassandra ゴールドセット CASS-11..15 の Facts/RuleHit 整備
 - [ ] ゴールドセット（CASS-01..30）整備と自動回帰テスト
 
 ## 4. 永続化と検索

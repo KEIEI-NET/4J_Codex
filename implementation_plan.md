@@ -94,7 +94,7 @@
 | ID   | 内容                                                                 | 完了条件                                               | 優先度 | ステータス |
 |------|----------------------------------------------------------------------|--------------------------------------------------------|--------|------------|
 | JP-01 | Spring DI アノテーション検出を拡張（`@Autowired/@Inject/@Qualifier`）し、Symbol タグへ反映 | `SpringAnnotationInspector` に DI タグ追加、関連テスト作成 | High   | ✅ 完了 |
-| JP-02 | Cassandra CQL 抽出のテストケース拡充                               | 単体テストで典型的な QueryBuilder/文字列結合を検証       | High   | ⛏️ 継続（ケース追加予定） |
+| JP-02 | Cassandra CQL 抽出のテストケース拡充                               | 単体テストで典型的な QueryBuilder/文字列結合を検証       | High   | ✅ 完了 |
 | JP-03 | Elasticsearch クライアント呼び出し検出の実装                       | `QUERIES_ES` Rel と `ESIndex` 出力、単体テスト整備       | Medium | ✅ 完了 |
 | JP-04 | ドキュメント/TODO 更新                                             | `todo.md`, `docs/howto/java_parser_usage.md` を最新化   | Medium | ✅ 完了 |
 | JP-05 | ゴールドセット / 回帰テスト整備                                    | Cassandra & Elasticsearch ゴールドサンプルと CI 反映     | High   | ⛏️ 計画中 |

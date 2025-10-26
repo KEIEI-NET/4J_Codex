@@ -1,0 +1,1 @@
+{"caseId":"CASS-12","type":"DBQuery","origin":{"file":"reports/UserEventExport.java","line":47},"payload":{"cql":"SELECT * FROM ks.user_events WHERE tenant_id = ? AND user_id IN (?...);","operation":"SELECT","predicates":[{"column":"tenant_id","operator":"="},{"column":"user_id","operator":"IN","inListLength":240}],"parameters":["tenant_id","user_id"],"inListLength":240}}

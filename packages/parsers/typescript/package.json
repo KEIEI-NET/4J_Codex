@@ -1,0 +1,26 @@
+{
+  "name": "@codex/parsers-typescript",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "parsers-typescript": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "ts-node --esm src/cli.ts --help",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "ts-morph": "^23.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.1"
+  }
+}

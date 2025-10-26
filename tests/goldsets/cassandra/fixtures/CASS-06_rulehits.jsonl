@@ -1,0 +1,3 @@
+{"caseId":"CASS-06","type":"RuleHit","ruleId":"SECONDARY_INDEX_LIKE","severity":"high","message":"LIKE predicate on secondary index leads to full scan","evidence":{"column":"message","pattern":"%failed%"}}
+{"caseId":"CASS-06","type":"RuleHit","ruleId":"TRIPLE_BAD_FILTER","severity":"critical","message":"ALLOW FILTERING + secondary index + LIKE combination detected","evidence":{"cql":"SELECT * FROM ks.audit_logs WHERE tenant_id = ? AND message LIKE '%failed%' ALLOW FILTERING;"}}
+{"caseId":"CASS-06","type":"RuleHit","ruleId":"ALLOW_FILTERING","severity":"high","message":"ALLOW FILTERING with secondary index query","evidence":{"file":"src/audit/AuditLogSearcher.java","line":102}}

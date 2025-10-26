@@ -1,0 +1,3 @@
+{"caseId":"CASS-04","type":"Batch","origin":{"file":"src/account/AccountSettingsDao.java","line":120},"payload":{"kind":"UNLOGGED","statements":[{"operation":"INSERT","ifCondition":true},{"operation":"UPDATE","ifCondition":false}]}}
+{"caseId":"CASS-04","type":"Mutation","origin":{"file":"src/account/AccountSettingsDao.java","line":121},"payload":{"operation":"INSERT","ifCondition":true}}
+{"caseId":"CASS-04","type":"Mutation","origin":{"file":"src/account/AccountSettingsDao.java","line":123},"payload":{"operation":"UPDATE","ifCondition":false}}

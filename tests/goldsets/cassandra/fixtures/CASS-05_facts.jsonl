@@ -1,0 +1,1 @@
+{"caseId":"CASS-05","type":"StatementUsage","origin":{"file":"src/report/DailyMetricsJob.java","line":74},"payload":{"statementKind":"SimpleStatement","query":"UPDATE ks.daily_metrics SET value = ? WHERE metric_date = ? AND metric_id = ?","executions":50000,"usesPrepared":false}}

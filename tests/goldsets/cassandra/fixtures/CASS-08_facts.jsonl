@@ -1,0 +1,1 @@
+{"caseId":"CASS-08","type":"DBQuery","origin":{"file":"src/transactions/HistoryDao.java","line":48},"payload":{"cql":"SELECT account_id, ts, amount FROM ks.transactions WHERE account_id = ? ORDER BY ts ASC LIMIT 500;","operation":"SELECT","orderBy":[{"column":"ts","direction":"ASC"}],"clusteringOrder":["ts DESC"]}}

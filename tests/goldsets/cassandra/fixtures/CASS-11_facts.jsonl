@@ -1,0 +1,1 @@
+{"caseId":"CASS-11","type":"PartitionMetrics","origin":{"file":"metrics/HotPartitionMonitor.java","line":64},"payload":{"table":"ks.metric_values","partitionKey":"tenant_id=t-critical,metric_id=cpu","writesPerSecond":1100,"shareOfCluster":0.65,"windowSeconds":60}}

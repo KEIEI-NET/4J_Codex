@@ -1,0 +1,2 @@
+{"caseId":"CASS-03","type":"DBQuery","origin":{"file":"src/audit/AuditReader.java","line":55},"payload":{"cql":"SELECT * FROM ks.audit_events WHERE tenant_id=?","operation":"SELECT","consistency":"ALL"}}
+{"caseId":"CASS-03","type":"Mutation","origin":{"file":"src/audit/AuditWriter.java","line":37},"payload":{"cql":"INSERT INTO ks.audit_events (tenant_id, audit_id, ts, payload) VALUES (?,?,?,?)","operation":"INSERT","consistency":"ONE"}}

@@ -1,0 +1,1 @@
+{"caseId":"CASS-04","type":"RuleHit","ruleId":"MIXED_LWT_BATCH","severity":"medium","message":"Batch mixes IF LWT and non-LWT mutations","evidence":{"batchKind":"UNLOGGED","statementCount":2}}

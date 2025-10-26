@@ -1,0 +1,2 @@
+{"caseId":"CASS-19","type":"TableCompaction","payload":{"table":"ks.device_logs","strategy":"TimeWindowCompactionStrategy","windowSizeHours":1}}
+{"caseId":"CASS-19","type":"AccessPattern","payload":{"table":"ks.device_logs","pattern":"random_point_read","olderDataAccessRatio":0.6}}

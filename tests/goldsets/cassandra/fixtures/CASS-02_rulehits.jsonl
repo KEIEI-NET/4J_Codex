@@ -1,0 +1,2 @@
+{"caseId":"CASS-02","type":"RuleHit","ruleId":"NO_LIMIT","severity":"high","message":"SELECT on events lacks LIMIT","evidence":{"file":"src/notification/NotificationHistoryDao.java","line":88}}
+{"caseId":"CASS-02","type":"RuleHit","ruleId":"NO_PAGING","severity":"high","message":"Statement executes without page size configuration","evidence":{"configKeys":["pageSize"]}}

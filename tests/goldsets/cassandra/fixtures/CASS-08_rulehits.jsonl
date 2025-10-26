@@ -1,0 +1,1 @@
+{"caseId":"CASS-08","type":"RuleHit","ruleId":"ORDER_BY_SKEW","severity":"low","message":"ORDER BY ts ASC conflicts with clustering order DESC","evidence":{"clusterOrder":"DESC","requestedOrder":"ASC"}}
