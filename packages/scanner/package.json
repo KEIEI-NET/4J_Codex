@@ -1,0 +1,20 @@
+{
+  "name": "@codex/scanner",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "scanner": "bin/scanner"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest",
+    "dev": "node --loader ts-node/esm src/cli.ts"
+  },
+  "dependencies": {
+    "ignore": "^5.3.0",
+    "minimist": "^1.2.8"
+  }
+}

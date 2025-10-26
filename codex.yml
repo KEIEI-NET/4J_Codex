@@ -1,0 +1,26 @@
+version: 0.1
+plugins:
+  - name: scanner
+    provides: [scan]
+    path: packages/scanner/bin/scanner
+  - name: ir-normalizer
+    provides: [normalize]
+    path: packages/ir-normalizer/bin/ir-normalizer
+  - name: rules-engine
+    provides: [check]
+    path: packages/rules-engine/bin/rules-engine
+  - name: graph-loader
+    provides: [load]
+    path: packages/graph-loader/bin/graph-loader
+  - name: search-indexer
+    provides: [index]
+    path: packages/search-indexer/bin/search-indexer
+  - name: api
+    provides: [serve]
+    path: packages/api/bin/api
+  - name: ui
+    provides: [ui]
+    path: packages/ui/bin/ui
+slo:
+  graph_api_p95_ms: 1000
+  incremental_analysis_p95_ms: 180000

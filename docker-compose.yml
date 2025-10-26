@@ -1,0 +1,131 @@
+version: "3.9"
+
+services:
+  neo4j:
+    image: neo4j:5.15
+    container_name: codex-neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_USER: ${NEO4J_USER:-neo4j}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-password}
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-password}
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*"
+      NEO4J_server_memory_pagecache_size: ${NEO4J_PAGECACHE_SIZE:-512M}
+      NEO4J_server_memory_heap_initial__size: ${NEO4J_HEAP_SIZE:-2G}
+      NEO4J_server_memory_heap_max__size: ${NEO4J_HEAP_SIZE:-2G}
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/import
+    healthcheck:
+      test: [
+        "CMD-SHELL",
+        "cypher-shell -a bolt://localhost:7687 -u \"$NEO4J_USER\" -p \"$NEO4J_PASSWORD\" 'RETURN 1;' || exit 1"
+      ]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    networks:
+      - codex
+
+  opensearch:
+    image: opensearchproject/opensearch:2.11.1
+    container_name: codex-opensearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      bootstrap.memory_lock: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 30
+      start_period: 40s
+    networks:
+      - codex
+
+  api:
+    image: node:20
+    container_name: codex-api
+    profiles: ["app"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:cached
+    command: ["sleep", "infinity"]
+    environment:
+      NODE_ENV: development
+      NEO4J_URI: bolt://neo4j:7687
+      OPENSEARCH_URL: http://opensearch:9200
+      PORT: 8080
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      opensearch:
+        condition: service_healthy
+    networks:
+      - codex
+
+  ui:
+    image: node:20
+    container_name: codex-ui
+    profiles: ["ui"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:cached
+    command: ["sleep", "infinity"]
+    environment:
+      NODE_ENV: development
+      API_BASE_URL: http://api:8080
+    depends_on:
+      api:
+        condition: service_started
+    networks:
+      - codex
+
+  worker:
+    image: node:20
+    container_name: codex-worker
+    profiles: ["worker"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace:cached
+    command: ["sleep", "infinity"]
+    environment:
+      NODE_ENV: development
+      NEO4J_URI: bolt://neo4j:7687
+      OPENSEARCH_URL: http://opensearch:9200
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      opensearch:
+        condition: service_healthy
+    networks:
+      - codex
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  opensearch_data:
+
+networks:
+  codex:

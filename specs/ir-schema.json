@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://codex.dev/specs/ir-schema.json",
+  "title": "Codex IR Entity",
+  "type": "object",
+  "required": ["type", "id"],
+  "oneOf": [
+    { "$ref": "#/definitions/File" },
+    { "$ref": "#/definitions/Symbol" },
+    { "$ref": "#/definitions/Rel" },
+    { "$ref": "#/definitions/DBQuery" },
+    { "$ref": "#/definitions/ESIndex" },
+    { "$ref": "#/definitions/RuleHit" }
+  ],
+  "definitions": {
+    "File": {
+      "type": "object",
+      "required": ["type", "id", "path", "lang"],
+      "properties": {
+        "type": { "const": "File" },
+        "id": { "pattern": "^file:[a-zA-Z0-9_./-]+$" },
+        "path": { "type": "string" },
+        "lang": { "type": "string" },
+        "hash": { "type": "string" },
+        "loc": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "Symbol": {
+      "type": "object",
+      "required": ["type", "id", "kind", "name", "fqname", "fileId"],
+      "properties": {
+        "type": { "const": "Symbol" },
+        "id": { "pattern": "^sym:[^\\s]+$" },
+        "kind": { "type": "string" },
+        "name": { "type": "string" },
+        "fqname": { "type": "string" },
+        "fileId": { "type": "string", "pattern": "^file:" },
+        "start": { "type": "integer", "minimum": -1 },
+        "end": { "type": "integer", "minimum": -1 },
+        "annotations": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "Rel": {
+      "type": "object",
+      "required": ["type", "rel", "from", "to"],
+      "properties": {
+        "type": { "const": "Rel" },
+        "rel": { "type": "string" },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "weight": { "type": "number", "minimum": 0 },
+        "op": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "DBQuery": {
+      "type": "object",
+      "required": ["type", "id", "raw", "op"],
+      "properties": {
+        "type": { "const": "DBQuery" },
+        "id": { "pattern": "^dbq:[^\\s]+$" },
+        "raw": { "type": "string" },
+        "op": { "type": "string" },
+        "allowFiltering": { "type": "boolean" }
+      }
+    },
+    "ESIndex": {
+      "type": "object",
+      "required": ["type", "id", "name"],
+      "properties": {
+        "type": { "const": "ESIndex" },
+        "id": { "pattern": "^esi:[^\\s]+$" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "RuleHit": {
+      "type": "object",
+      "required": ["type", "rule", "entity", "severity"],
+      "properties": {
+        "type": { "const": "RuleHit" },
+        "rule": { "type": "string" },
+        "entity": { "type": "string" },
+        "severity": { "type": "string" },
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 0 },
+        "suggest": { "type": "string" }
+      }
+    }
+  }
+}
