@@ -24,14 +24,60 @@ TypeScript / Go / C# の各 L1 解析器が出力する Facts を整理し、共
 - `defaultImport`: デフォルト import の識別子。存在しない場合は `null`。
 
 ### `Symbol`
-- `kind`: `function` / `class`。
+- `kind`: `function` / `class` / `method`。
 - `exported`: `true` / `false`。
 - `async`: 関数が `async` の場合に `true`（クラスには付与されない）。
+- `fqname`: `Class#method` など、`sym:` ID に対応する完全名（`method` のみ現在付与）。
 
 ### `Call`
 - `callee`: 呼び出し式全体（例：`console.log` や関数名）。
 - `receiver`: プロパティアクセスのレシーバー（例：`console`）。単純識別子の場合は `null`。
 - `arguments`: 引数の文字列表現
+- `startLine`: 呼び出し開始行。
+
+### `AngularSymbol`
+- `className`: クラス名。
+- `decorator`: `Component` / `Injectable` / `Directive` / `Pipe` / `NgModule`。
+- 付随情報: `selector` / `providedIn` / `standalone` / `templateUrl` / `pipeName` / `providers` / `declarations` / `imports` / `exports` など、デコレータに応じて付与。
+- `startLine`: クラス宣言行。
+
+### `AngularInjection`
+- `className`: 注入先クラス。
+- `parameter`: コンストラクタ引数名。
+- `token`: 解決済み DI トークン（型名または `@Inject` 引数）。
+- `optional`: オプショナル指定（`?` や初期化子）を持つ場合に `true`。
+- `decorators`: 付与されているデコレータ名配列。
+- `startLine`: パラメータの開始行。
+
+### `AngularRoute`
+- `method`: `forRoot` / `forChild`。
+- `path`: ルートパス（未設定の場合は `null`）。
+- `component`: バインドされるコンポーネント識別子。
+- `loadChildren`: 遅延ロード式（文字列表現）。
+- `redirectTo` / `outlet` / `pathMatch`: 対応するプロパティ文字列。
+- `startLine`: ルートオブジェクトの開始行。
+
+### `HttpCall`
+- `className`: 呼び出しが行われたクラス。
+- `owner`: 呼び出しを含むメソッド名（不明な場合は `null`）。
+- `property`: 利用した `HttpClient` プロパティ名。
+- `httpMethod`: HTTP メソッド（大文字）。
+- `url`: 第1引数の URL／式文字列。
+- `rel`: 固定で `CALLS_HTTP`。
+- `startLine`: 呼び出しの開始行。
+
+### `DBQuery`（Cassandra）
+- `driver`: 固定で `cassandra`。
+- `method`: `execute` / `batch` / `eachRow` / `stream` / `prepare`。
+- `raw`: 元クエリ文字列またはバッチ要素から抽出した文字列。
+- `op`: クエリ先頭キーワード（`SELECT` / `INSERT` など）。
+- `prepared`: `prepare: true` オプション検出時に `true`。
+- `batch`: `method === "batch"` の場合に `true`。
+- `startLine`: 呼び出しの開始行。
+
+### `Rel`
+- `CALLS_HTTP`: `from`（`file:...` または `sym:Class#method`）から `http:<hash>` のエンドポイントノードに接続。`httpMethod` / `url` / `startLine` を付与。
+- `EXECUTES_DB_QUERY`: `from`（`file:`）→ `dbq:` ノードを結合し、`method` や `driver` を属性として保持。
 
 ## Go (`packages/parsers/go`)
 

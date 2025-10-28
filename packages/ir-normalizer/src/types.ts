@@ -1,10 +1,11 @@
 export interface BaseEntity {
   type: string;
-  id: string;
+  id?: string;
 }
 
 export interface FileEntity extends BaseEntity {
   type: "File";
+  id: string;
   path: string;
   lang: string;
   hash?: string;
@@ -13,6 +14,7 @@ export interface FileEntity extends BaseEntity {
 
 export interface SymbolEntity extends BaseEntity {
   type: "Symbol";
+  id: string;
   kind: string;
   name: string;
   fqname: string;
@@ -25,17 +27,34 @@ export interface SymbolEntity extends BaseEntity {
 
 export interface RelEntity extends BaseEntity {
   type: "Rel";
+  id?: string;
   rel: string;
   from: string;
   to: string;
   weight?: number;
+  httpMethod?: string;
+  url?: string;
+  method?: string;
+  driver?: string;
+  file?: string;
+  startLine?: number;
+  [key: string]: unknown;
 }
 
 export interface DbQueryEntity extends BaseEntity {
   type: "DBQuery";
+  id: string;
   raw: string;
   op: string;
   allowFiltering?: boolean;
+  driver?: string;
+  method?: string;
+  prepared?: boolean;
+  batch?: boolean;
+  file?: string;
+  startLine?: number;
+  language?: string;
+  [key: string]: unknown;
 }
 
 export interface RuleHitEntity extends BaseEntity {

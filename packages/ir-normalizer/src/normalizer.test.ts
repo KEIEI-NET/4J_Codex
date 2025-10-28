@@ -33,4 +33,43 @@ describe("normalizeEntity", () => {
   it("throws on invalid entity", () => {
     expect(() => normalizeEntity({})).toThrowError();
   });
+
+  it("transforms HttpCall into CALLS_HTTP relationship", () => {
+    const entity = normalizeEntity({
+      type: "HttpCall",
+      file: "src/app.component.ts",
+      className: "AppComponent",
+      owner: "loadUsers",
+      url: "/api/users",
+      httpMethod: "get",
+      startLine: 42
+    });
+
+    expect(entity.type).toBe("Rel");
+    if (entity.type !== "Rel") {
+      return;
+    }
+    expect(entity.rel).toBe("CALLS_HTTP");
+    expect(entity.from).toBe("file:src/app.component.ts");
+    expect(entity.httpMethod).toBe("GET");
+    expect(typeof entity.to).toBe("string");
+    expect((entity.to as string).startsWith("http:")).toBe(true);
+  });
+
+  it("generates DBQuery id when missing", () => {
+    const entity = normalizeEntity({
+      type: "DBQuery",
+      raw: "select * from users",
+      op: "select",
+      file: "src\\repository.ts",
+      method: "execute",
+      startLine: 10
+    });
+    if (entity.type !== "DBQuery") {
+      throw new Error("expected DBQuery entity");
+    }
+    expect(entity.id).toMatch(/^dbq:/);
+    expect(entity.file).toBe("src/repository.ts");
+    expect(entity.op).toBe("SELECT");
+  });
 });

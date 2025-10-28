@@ -5,7 +5,7 @@
 - [x] リポジトリ初期化（`packages/`, `tests/`, `specs/`, `docs/howto/` を生成）
 - [x] `codex.yml` 雛形作成（プラグインマッピング、SLO 設定）
 - [x] Docker Compose（Neo4j / OpenSearch / API / UI / Worker）初期構成
-- [ ] GitHub Actions / Codex CLI ワークフロー雛形追加
+- [x] GitHub Actions / Codex CLI ワークフロー雛形追加
 
 ## 1. 基盤層
 
@@ -17,14 +17,16 @@
 
 ## 2. 言語解析器
 
+_目標: Sprint 2 (週3-4) で優先タスクを完了_
+
 ### Java (L0)
 
 - [x] JDT/Javaparser 導入と AST パイプライン構築
-- [ ] Spring DI 解析（Autowired/Qualifier/Primary）
+- [x] Spring DI 解析（Autowired/Qualifier/Primary）
 - [x] Cassandra CQL 抽出（リテラル・QueryBuilder）
 - [x] Elasticsearch 呼び出し検出（QUERIES_ES Rel 出力）
 - [x] Facts JSONL 出力（stderr メトリクス整備は今後）
-- [ ] AST パターン単体テスト（呼び出し/CQL/DI）
+- [x] AST パターン単体テスト（呼び出し/CQL/DI）
   - [x] Spring DI パターンの単体テスト整備
   - [x] Cassandra CQL 抽出ケース拡充
 
@@ -32,9 +34,9 @@
 
 - [x] CLI スケルトン & スタブ解析コマンド
 - [x] ts-morph ベースの AST 解析器骨組み
-- [ ] Angular DI・Router 解析
-- [ ] HttpClient 呼び出し→`CALLS_HTTP` 生成
-- [ ] cassandra-driver クエリ抽出
+- [x] Angular DI・Router 解析
+- [x] HttpClient 呼び出し→`CALLS_HTTP` 生成
+- [x] cassandra-driver クエリ抽出
 - [ ] テスト（DI/HTTP/CQL ケース）
 
 ### Go (L1)
@@ -55,6 +57,8 @@
 
 ## 3. ルールエンジン・ゴールドセット
 
+_目標: Sprint 2 で YAML 化と主要ルール移行を完了_
+
 - [ ] YAML ルールローダ実装
 - [ ] Cassandra 主要ルール（ALLOW_FILTERING, MISSING_PK, NO_LIMIT）実装
 - [ ] LWT/BATCH 微分則（LWT-R1〜R3, BAT-R1〜R4）実装
@@ -63,30 +67,39 @@
 - [x] Cassandra ゴールドセット検証スクリプト追加（`npm run -w packages/rules-engine validate:cassandra`）
 - [x] Cassandra 追加ルール実装（HOT_PARTITION, IN_LIST_FANOUT, ALLOW_FILTERING_BUILDER ほか）
 - [x] Cassandra ゴールドセット CASS-11..15 の Facts/RuleHit 整備
-- [ ] ゴールドセット（CASS-01..30）整備と自動回帰テスト
+- [x] ゴールドセット（CASS-01..30）整備と自動回帰テスト _(CASS-21..30 を追加し、集計レポートを validate スクリプトで出力)_
 
 ## 4. 永続化と検索
 
-- [ ] Neo4j CSV Export/Import ユーティリティ整備
-- [ ] APOC MERGE バッチロジック実装（chunk サイズ調整）
+_目標: Sprint 1 で Loader/Indexer を実サービス化し、追加項目は Sprint 1 後半〜2 で継続_
+- 担当: @alice（Owner）, @bob（レビュー）
+
+- [x] Neo4j CSV Export/Import ユーティリティ整備 _(Graph Loader CLI に `--out-csv` オプションを追加)_
+- [ ] APOC MERGE バッチロジック実装（chunk サイズ調整） _(Graph Loader MVP で部分対応・さらなる最適化が必要)_
 - [ ] 制約/インデックス 適用スクリプト
-- [ ] OpenSearch インデクサ実装（IR/RuleHit 対応）
+- [x] OpenSearch インデクサ実装（IR/RuleHit 対応） _(Bulk 書き込み・インデックス管理とエラー集約を実装)_
 - [ ] OpenSearch クエリユニットテスト（Severity / tables / path 検索）
+- [x] Loader/Indexer の処理メトリクス出力 _(CLI で書き込み件数・インデックス作成数を表示)_
 
 ## 5. Graph API
 
-- [ ] FastAPI or Express プロジェクト雛形
-- [ ] `/symbol` エンドポイント（検索＋ページング）
-- [ ] `/graph/symbol/{id}` depth≤2 サブグラフ取得
+_目標: Sprint 3 で MVP を提供_
+
+- [x] Fastify スタブプロジェクト雛形（/healthz, /api/ping, /api/symbol/:id）
+- [x] `/symbol` エンドポイント（検索＋ページング、OpenSearch 連携）
+- [x] `/graph/symbol/{id}` depth≤2 サブグラフ取得
 - [ ] `/impact` 影響範囲計算（ranked paths）
 - [ ] `/db/table/{keyspace}/{table}/consumers` 実装
-- [ ] `/rulehits` フィルタ/ソート対応
-- [ ] RBAC / 認証ミドルウェア
+- [x] `/rulehits` フィルタ/ソート対応 _(symbolId クエリ・OpenSearch 連携)_
+- [x] RBAC / 認証ミドルウェア _(API_SHARED_SECRET による簡易 Bearer/Key 認証)_
 - [ ] API 単体/E2E テスト
 
 ## 6. UI (Next.js + Cytoscape.js)
 
-- [ ] Next.js プロジェクト初期化・Cytoscape.js 組込み
+_目標: Sprint 3 で初版を公開_
+
+- [x] React (Vite) スタブを構築し API と接続 (Codex Explorer)
+- [x] Cytoscape.js を導入しグラフ描画を表示
 - [ ] レイヤ切替タブ（File / Symbol / Module / Endpoint / DB）
 - [ ] サブグラフ描画（200 ノード制限、ホップ展開）
 - [ ] ノード/エッジ スタイル（Severity カラー、Badge）
@@ -97,6 +110,8 @@
 
 ## 7. 可観測性・LLM 連携
 
+_目標: Sprint 3〜4 で順次実装_
+
 - [ ] 共通ログ／メトリクスライブラリ整備（Prometheus exporter）
 - [ ] OTLP Ingestor→Kafka→Transformer→GraphLoader パイプライン構築
 - [ ] `OBSERVES` 関係生成と `DBQuery.metrics` 更新実装
@@ -106,7 +121,10 @@
 
 ## 8. CI/CD・運用
 
-- [ ] PR ワークフロー（`codex diff`→`codex run analyze`→`codex run load`→`codex check`→コメント）
+_目標: Sprint 1 で PR ワークフローを完成させ、Sprint 4 までに残項目を連携_
+- 担当: @bob（Owner）, @carol（ドキュメント）
+
+- [x] PR ワークフロー（`codex diff`→`codex run analyze`→`codex run load`→`codex check`→コメント） _(CI ワークフローを `ci:verify` + `ci:pipeline` へ拡張し、Cassandra レポートをアーティファクト化)_
 - [ ] Nightly フル解析ジョブ＋Snapshot 保存（S3/Blob）
 - [ ] Snapshot 復元手順 (`neo4j-admin load`) 自動化
 - [ ] Docker/K8s マニフェスト作成（Prod 用）
@@ -114,6 +132,8 @@
 - [ ] 運用ドキュメント（HowTo、Runbook）作成
 
 ## 9. パフォーマンス・受け入れ試験
+
+_目標: Sprint 4 で正式レポートを提示_
 
 - [ ] サブグラフ API p95 < 1s テストスイート
 - [ ] 増分解析（100 ファイル）p95 < 3m 計測
