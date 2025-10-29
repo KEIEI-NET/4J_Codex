@@ -1,0 +1,53 @@
+name: codex-cli
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      run_always:
+        description: "Force Codex CLI pipeline even when repository var is disabled"
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  codex-cli:
+    if: ${{ vars.CODEX_CLI_ENABLED != 'false' || github.event_name == 'workflow_dispatch' && github.event.inputs.run_always == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install project dependencies
+        run: npm ci
+
+      - name: Ensure Codex CLI is installed
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v codex >/dev/null 2>&1; then
+            npm install -g codex-cli
+          fi
+
+      - name: Verify Codex CLI availability
+        run: codex --version
+
+      - name: Run Codex CLI pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          codex diff --since origin/main | codex run analyze
+          codex run load
+          codex check --gold tests/goldsets/cassandra.jsonl --fail-on critical
+          codex pr-comment --rules high,critical

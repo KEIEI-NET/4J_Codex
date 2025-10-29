@@ -1,0 +1,1 @@
+{"caseId":"CASS-22","type":"RuleHit","ruleId":"WRITE_TIMEOUT_RETRY","severity":"high","message":"Write timeout retried without idempotent guarantee","evidence":{"policy":"AggressiveRetryPolicy","idempotent":false}}

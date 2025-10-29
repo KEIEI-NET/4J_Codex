@@ -40,11 +40,11 @@
 
 ※ 見積は 1 人日単位の概算。タスク G2/G5 は複数メンバーで並列可能。G4 は G3 完了後に着手。
 
-### 進捗メモ（2025-10-27）
+### 進捗メモ（2025-10-27 更新）
 - G1 完了: Cassandra ディレクトリ構成と Schema 雛形を配置済み。
 - G2 完了: CASS-01..10 の Facts/RuleHit JSONL とメタドキュメントを登録済み。
-- G3 進行: ルールエンジンで CASS-01..15 を判定し、`vitest` による回帰テストと CLI (`rules-engine cassandra --facts ...`) を整備。
-- G5 進行中: CASS-11..15 を追加済み。次は CASS-16..20（Wide Partition, IN 多値再構築、MV 未使用、Read Repair, TimeWindowCompaction 等）のサンプル化に着手予定。
+- G3 完了: ルールエンジンで CASS-01..30 を判定し、`vitest` による回帰テストと CLI (`rules-engine cassandra --facts ...`) を整備。`npm run -w @codex/rules-engine report:cassandra` で統計 JSON を出力可能。
+- G5 完了: CASS-11..30 の追加ケース（RetryPolicy, LWT, TWCS, Timeout, Tombstone ほか）を登録済み。以降は精度確認とリグレッション継続。
 
 ### 次のケース候補（CASS-16..20 概要）
 - **CASS-16** Materialized View 未使用の巨大JOIN風取得 — `MV_MISSING` ルール想定。

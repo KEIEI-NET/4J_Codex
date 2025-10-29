@@ -1,0 +1,1 @@
+{"caseId":"CASS-25","type":"RuleHit","ruleId":"LWT_OVERUSE","severity":"high","message":"LWT throughput 640/s exceeds safe threshold","evidence":{"lwtPerSecond":640,"ratio":0.72,"table":"ks.registration_tokens"}}

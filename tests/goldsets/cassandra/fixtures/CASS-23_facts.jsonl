@@ -1,0 +1,2 @@
+{"caseId":"CASS-23","type":"RetryPolicy","origin":{"file":"src/config/CassandraCluster.java","line":56},"payload":{"policyClass":"DefaultRetryPolicy","onWriteTimeout":"retry","maxAttempts":3}}
+{"caseId":"CASS-23","type":"Mutation","origin":{"file":"src/profile/ProfileRepository.java","line":132},"payload":{"operation":"UPDATE","table":"ks.user_profile","idempotent":false}}

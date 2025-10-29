@@ -1,0 +1,1 @@
+{"caseId":"CASS-29","type":"RuleHit","ruleId":"NO_LIMIT","severity":"high","message":"SELECT on events lacks LIMIT","evidence":{"cql":"SELECT tenant_id, user_id, ts, payload FROM ks.events WHERE tenant_id = ?"}}

@@ -1,0 +1,5 @@
+{"type":"File","id":"file:src/App.java","path":"src/App.java","language":"java"}
+{"type":"Symbol","id":"sym:App#main","fileId":"file:src/App.java","kind":"METHOD"}
+{"type":"Rel","rel":"CALLS","from":"sym:App#main","to":"sym:Service#do","weight":1}
+{"type":"Symbol","id":"sym:Service#do","fileId":"file:src/Service.java","kind":"METHOD"}
+{"type":"RuleHit","ruleId":"ALLOW_FILTERING","caseId":"CASS-01","severity":"critical"}

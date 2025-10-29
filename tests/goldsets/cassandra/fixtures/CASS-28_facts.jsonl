@@ -1,0 +1,2 @@
+{"caseId":"CASS-28","type":"DBQuery","origin":{"file":"src/cleanup/DeleteOldSessionsJob.java","line":39},"payload":{"cql":"DELETE FROM ks.user_sessions WHERE tenant_id = ? AND user_id = ?","operation":"DELETE","parameters":["tenant_id","user_id"],"tombstoneRisk":"high"}}
+{"caseId":"CASS-28","type":"JobConfig","payload":{"job":"DeleteOldSessionsJob","batchSize":5000,"ttlStrategy":"scheduled-window"}}

@@ -127,6 +127,41 @@ dotnet run --project packages/parsers/csharp/src/Codex.CSharp.Parser -- \
 
 Roslyn により型・メソッド・呼び出しを解析し、Facts に落とし込みます。
 
+### 4.6 Graph Loader (MVP ドライラン)
+
+```bash
+# ドライラン（統計のみ）
+packages/graph-loader/bin/graph-loader --in ./tmp/ir.jsonl --pretty
+
+# Neo4j へ書き込み
+packages/graph-loader/bin/graph-loader \
+  --in ./tmp/ir.jsonl \
+  --neo4j-uri bolt://localhost:7687 \
+  --neo4j-user neo4j \
+  --neo4j-password password \
+  --dry-run=false
+```
+
+IR JSONL を読み込み、ノード/リレーション件数を要約表示します。`--dry-run=false` を指定すると Neo4j に `MERGE` で書き込みます。書き込み時には接続情報 (`--neo4j-uri` など) を必ず指定してください。
+
+### 4.7 Search Indexer (MVP ドライラン)
+
+```bash
+# ドライラン（統計のみ）
+packages/search-indexer/bin/search-indexer --in ./tmp/ir.jsonl --pretty
+
+# OpenSearch へ書き込み
+packages/search-indexer/bin/search-indexer \
+  --in ./tmp/ir.jsonl \
+  --endpoint http://localhost:9200 \
+  --username admin \
+  --password secret \
+  --index-prefix codex \
+  --dry-run=false
+```
+
+IR や RuleHit の JSONL を解析し、ドキュメントタイプ別件数を把握できます。`--dry-run=false` を指定すると OpenSearch の `bulk` API でインデクシングします。
+
 ## 5. 現在の実装状況
 
 - ✅ Scanner: ファイル列挙、Git 差分対応、単体テスト済み。
@@ -151,6 +186,24 @@ npm run -w packages/ir-normalizer test
 
 # Java Parser テスト
 mvn -f packages/parsers/java/pom.xml test
+
+# CI 検証ジョブと同等のローカル実行
+npm run ci:verify
+
+## GitHub Actions（Codex CLI ワークフロー）
+
+- リポジトリ変数 `CODEX_CLI_ENABLED` を `true` に設定すると、`.github/workflows/ci-goldset.yml` が PR / main push で自動起動します。無効化したい場合は `false` を設定してください。
+- ワークフロー内では Codex CLI が見つからない場合に `npm install -g codex-cli` で取得し、`codex --version` で存在チェックを行います。
+- Codex CLI をローカルで確認する場合も同様に `npm install -g codex-cli` を実行し、`codex --version` でインストール状態を検証できます。
+
+# ゴールドセット統計レポート生成
+npm run -w @codex/rules-engine report:cassandra
+
+# パイプライン乾燥ラン (Graph Loader / Search Indexer / Rules)
+npm run ci:pipeline
+
+# UI E2E (Playwright)
+npm run -w @codex/ui test:e2e
 ```
 
 ---
@@ -165,3 +218,25 @@ mvn -f packages/parsers/java/pom.xml test
 関連ドキュメント: `docs/parsers/l1-facts.md`（L1 Facts 仕様と拡張計画）。
 
 詳細なマイルストーンは `implementation_plan.md` と `todo.md` を参照してください。
+### 4.8 Graph API (Fastify)
+
+```bash
+npm run -w @codex/api dev
+# またはビルド後に
+npm run -w @codex/api build
+npm run -w @codex/api start
+
+curl http://localhost:4000/api/symbol?q=app
+curl http://localhost:4000/api/graph/symbol/sym%3AApp%23main?depth=2
+```
+
+`/healthz`, `/api/ping`, `/api/symbol`, `/api/symbol/:id`, `/api/graph/symbol/:id` を提供する API を Fastify で実装しています。Neo4j / OpenSearch の接続情報（`NEO4J_URI` / `OPENSEARCH_ENDPOINT` など）を設定すると実データにアクセスできます。
+
+### 4.9 React UI (Vite)
+
+```bash
+npm run -w @codex/ui install
+npm run -w @codex/ui dev
+```
+
+`http://localhost:5173` で Codex Explorer UI が起動し、検索フォームから Graph API を叩いて Cytoscape.js でグラフを可視化できます。

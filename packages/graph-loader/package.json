@@ -1,0 +1,18 @@
+{
+  "name": "@codex/graph-loader",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "graph-loader": "bin/graph-loader"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "minimist": "^1.2.8",
+    "neo4j-driver": "^5.23.0"
+  }
+}

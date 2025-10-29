@@ -119,10 +119,20 @@ class JavaParsePipelineTest {
                 "package com.example;\n" +
                         "public interface AccountRepository {}\n");
 
+        Path primaryRepoFile = sourceDir.resolve("PrimaryAccountRepository.java");
+        Files.writeString(primaryRepoFile,
+                "package com.example;\n" +
+                        "import org.springframework.context.annotation.Primary;\n" +
+                        "import org.springframework.stereotype.Repository;\n" +
+                        "@Repository\n" +
+                        "@Primary\n" +
+                        "public class PrimaryAccountRepository implements AccountRepository {}\n");
+
         Path input = Files.createTempFile("files-di", ".jsonl");
         Files.writeString(input,
                 "{\"type\":\"File\",\"path\":\"src/main/java/com/example/AccountService.java\",\"lang\":\"java\"}\n" +
-                        "{\"type\":\"File\",\"path\":\"src/main/java/com/example/AccountRepository.java\",\"lang\":\"java\"}\n");
+                        "{\"type\":\"File\",\"path\":\"src/main/java/com/example/AccountRepository.java\",\"lang\":\"java\"}\n" +
+                        "{\"type\":\"File\",\"path\":\"src/main/java/com/example/PrimaryAccountRepository.java\",\"lang\":\"java\"}\n");
         Path output = Files.createTempFile("facts-di", ".jsonl");
 
         ParseOptions options = new ParseOptions(input, output, null, Map.of("repoRoot", repo.toString()), null);
@@ -164,6 +174,16 @@ class JavaParsePipelineTest {
                 .orElse(null);
         assertNotNull(constructorSymbol);
         assertTrue(containsTag(constructorSymbol, "spring:injection:autowired"));
+
+        JsonNode primaryClass = nodes.stream()
+                .filter(node -> "Symbol".equals(node.path("type").asText())
+                        && "CLASS".equals(node.path("kind").asText())
+                        && "PrimaryAccountRepository".equals(node.path("name").asText()))
+                .findFirst()
+                .orElse(null);
+        assertNotNull(primaryClass);
+        assertTrue(containsTag(primaryClass, "spring:component:repository"));
+        assertTrue(containsTag(primaryClass, "spring:injection:primary"));
     }
 
     private boolean containsTag(JsonNode node, String tag) {

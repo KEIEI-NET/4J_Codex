@@ -1,0 +1,1 @@
+{"caseId":"CASS-24","type":"StatementUsage","origin":{"file":"src/audit/AuditLogWriter.java","line":45},"payload":{"statementKind":"SimpleStatement","usesPrepared":false,"executions":120,"query":"INSERT INTO ks.audit_logs (tenant_id, event_id, payload) VALUES (?, ?, ?)"}}

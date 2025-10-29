@@ -1,0 +1,2 @@
+{"caseId":"CASS-21","type":"DBQuery","origin":{"file":"src/export/SlowExportJob.java","line":112},"payload":{"cql":"SELECT * FROM ks.export_queue WHERE tenant_id = ?","operation":"SELECT","timeoutMillis":null,"parameters":["tenant_id"]}}
+{"caseId":"CASS-21","type":"TableSchema","payload":{"keyspace":"ks","table":"export_queue","partitionKeys":["tenant_id"],"clusteringKeys":["job_id"]}}

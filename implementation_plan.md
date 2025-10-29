@@ -83,20 +83,57 @@
 - UI パフォーマンス：WebGL レンダラ、ノード制限、クラスタ折り畳み戦略。
 - セキュリティ：機密ファイル除外、秘密情報マスク、監査証跡整備。
 
-## 8. 次アクション
+## 8. 実装ロードマップ（todo.md 連動）
 
-1. コアリポジトリ初期化（ディレクトリ構成、`codex.yml`, Docker Compose 叩き台、CI 雛形）。
-2. ゴールドセット定義とサンプルリポ準備。
-3. L0 スプリント計画：Java 解析器と Neo4j 連携の E2E スコープ確定。
-4. リソース割り当てとスケジュール合意（週次マイルストーン設定）。
+### Sprint 1（週間 1–2）: パイプライン完成度の底上げ
+- 担当: 永続化/検索 @alice, CI/CD @bob, 計画更新 @carol
+- **永続化と検索**（todo#4）
+  - Neo4j Loader を Bolt 書き込み対応済みの CLI からサービス化、MERGE 最適化と CSV Import ユーティリティの設計。
+  - OpenSearch Indexer を本運用対応、エラー処理と index 管理コマンドを整備。
+- **CI/CD・運用**（todo#8）
+  - GitHub Actions ワークフローを `codex diff → analyze → load → rules` に拡張、アーティファクトとして Cassandra レポートを保存。
+  - Nightly 解析ジョブの叩き台（手動トリガ）を codex.yml と docs に追記。
+- 出力物: Loader/Indexer サービス README、CI 実行ログ、更新された `todo.md` 状態。
 
-### 8.1 L0.1 Java Parser 強化スプリント（残タスク計画）
-| ID   | 内容                                                                 | 完了条件                                               | 優先度 | ステータス |
-|------|----------------------------------------------------------------------|--------------------------------------------------------|--------|------------|
-| JP-01 | Spring DI アノテーション検出を拡張（`@Autowired/@Inject/@Qualifier`）し、Symbol タグへ反映 | `SpringAnnotationInspector` に DI タグ追加、関連テスト作成 | High   | ✅ 完了 |
-| JP-02 | Cassandra CQL 抽出のテストケース拡充                               | 単体テストで典型的な QueryBuilder/文字列結合を検証       | High   | ✅ 完了 |
-| JP-03 | Elasticsearch クライアント呼び出し検出の実装                       | `QUERIES_ES` Rel と `ESIndex` 出力、単体テスト整備       | Medium | ✅ 完了 |
-| JP-04 | ドキュメント/TODO 更新                                             | `todo.md`, `docs/howto/java_parser_usage.md` を最新化   | Medium | ✅ 完了 |
-| JP-05 | ゴールドセット / 回帰テスト整備                                    | Cassandra & Elasticsearch ゴールドサンプルと CI 反映     | High   | ⛏️ 計画中 |
+> 進捗メモ: Loader/Indexer の CLI 機能拡張（CSV 書き出し・インデックス作成）および CI パイプライン (`ci:verify` + `ci:pipeline`) を実装済み。
 
-推奨順序：JP-01 → JP-02 → JP-03 → JP-04。JP-01/JP-02 で検出精度とテスト基盤を整え、JP-03 で検出範囲を広げた後、JP-04 でステータスと使用ドキュメントを更新する。
+### Sprint 2（週間 3–4）: 言語解析とルールエンジン強化
+- 担当: 言語解析 @david, ルール/ゴールドセット @alice, ドキュメント @carol
+- **言語解析器**（todo#2）
+  - Java Spring DI 解析の本実装と AST パターンテスト追加。
+  - TypeScript / Go / C# で DI・HTTP・CQL を検出する最初のルールを実装、テストケースを追加。
+- **ルールエンジン・ゴールドセット**（todo#3）
+  - YAML ルールローダを導入し、主要ルール（ALLOW_FILTERING, MISSING_PK, NO_LIMIT）を YAML 定義へ移行。
+  - LWT/BATCH 系ルール実装とゴールドセットの追従、`npm run report:cassandra` のダッシュボード連携。
+- 出力物: 新規ルール YAML、追加テスト、仕様変更に伴うドキュメント更新。
+
+### Sprint 3（週間 5–6）: Graph API と UI の初版
+- 担当: API @erin, UI @frank, 可観測性 @bob
+- **Graph API**（todo#5）
+  - Express/FastAPI 雛形を作成し、`/symbol`・`/graph/symbol/{id}`・`/rulehits` を read-only で提供。
+  - Neo4j/Index サービスとの接続層を整備し、簡易 RBAC を導入。
+- **UI**（todo#6）
+  - Next.js + Cytoscape.js の土台構築、シンボル探索→グラフ表示までの MVP を実装。
+  - Playwright による smoke テストを追加（CI パイプラインから `npm run -w @codex/ui test:e2e` を実行）。
+- **可観測性**（todo#7）
+  - Prometheus メトリクスエンドポイントと構造化ログを Graph Loader/API に組み込み。
+- 出力物: API/UI 起動手順、CI での smoke 実行ログ。
+
+> 進捗メモ: Fastify Graph API (`/api/symbol`, `/api/graph/symbol/:id`) と Vite + Cytoscape.js UI を実装し、検索・描画のスタブを確認済み。
+
+### Sprint 4（週間 7–8）: 運用・性能・受け入れ
+- 担当: CI/運用 @bob, 性能検証 @alice, 可観測性/LLM @david
+- **CI/CD・運用**（todo#8）
+  - Nightly フル解析ジョブの自動化、Snapshot 復元ドキュメント整備。
+  - Docker/K8s マニフェストのドラフトと RBAC ダッシュボード雛形。
+- **性能・受け入れ試験**（todo#9）
+  - サブグラフ API p95 < 1s、Neo4j 書き込み負荷テスト、UI ベンチ結果の記録。
+  - 受け入れ基準（Precision/Recall ≥0.9）報告テンプレート作成。
+- **可観測性・LLM 連携**（todo#7）
+  - OTLP Ingestor の PoC と `OBSERVES` 関係生成の初期実装。
+- 出力物: 性能測定レポート、運用 Runbook、残課題リスト。
+
+### ロードマップの運用ルール
+- 各 Sprint 完了時に `todo.md` の該当チェックと備考を更新し、Implementation Plan の本章を再掲する。
+- 依存関係の変更が発生した場合は `docs/status.md` に反映して関係者へ共有する。
+- 緊急タスクは Sprint バッファ（各 10%）で吸収し、不可の場合はロードマップを再計画する。

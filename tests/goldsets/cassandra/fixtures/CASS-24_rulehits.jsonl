@@ -1,0 +1,1 @@
+{"caseId":"CASS-24","type":"RuleHit","ruleId":"MISSING_PREPARE","severity":"low","message":"SimpleStatement executed repeatedly without prepare/bind","evidence":{"executions":120,"statementKind":"SimpleStatement","query":"INSERT INTO ks.audit_logs (tenant_id, event_id, payload) VALUES (?, ?, ?)"}}

@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv, { DefinedError } from "ajv";
 
@@ -11,6 +11,15 @@ interface ValidationIssue {
   file: string;
   line: number;
   message: string;
+}
+
+interface ValidationStats {
+  totalRecords: number;
+  facts: number;
+  rulehits: number;
+  ir: number;
+  cases: Set<string>;
+  ruleHitCounts: Map<string, number>;
 }
 
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +42,14 @@ const schemaValidators: Record<RecordKind, ReturnType<typeof ajv.compile> | null
 };
 
 const issues: ValidationIssue[] = [];
+const stats: ValidationStats = {
+  totalRecords: 0,
+  facts: 0,
+  rulehits: 0,
+  ir: 0,
+  cases: new Set<string>(),
+  ruleHitCounts: new Map<string, number>()
+};
 
 function loadSchema(kind: "facts" | "rulehits") {
   const schemaPath = resolve(schemasDir, `${kind}.schema.json`);
@@ -78,6 +95,7 @@ function validateFile(file: string) {
 
   for (let index = 0; index < lines.length; index += 1) {
     const raw = lines[index];
+    stats.totalRecords += 1;
     let record: unknown;
     try {
       record = JSON.parse(raw);
@@ -112,6 +130,20 @@ function validateFile(file: string) {
         line: index + 1,
         message: `caseId ${caseId} does not match filename ${file}`
       });
+    } else {
+      stats.cases.add(caseId);
+    }
+
+    if (kind === "facts") {
+      stats.facts += 1;
+    } else if (kind === "rulehits") {
+      stats.rulehits += 1;
+      const ruleId = (record as { ruleId?: unknown }).ruleId;
+      if (typeof ruleId === "string") {
+        stats.ruleHitCounts.set(ruleId, (stats.ruleHitCounts.get(ruleId) ?? 0) + 1);
+      }
+    } else if (kind === "ir") {
+      stats.ir += 1;
     }
 
     if (validator) {
@@ -132,6 +164,16 @@ function validateFile(file: string) {
 }
 
 function main() {
+  const args = process.argv.slice(2);
+  let reportPath: string | null = null;
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--report") {
+      reportPath = args[index + 1] ?? null;
+      index += 1;
+    }
+  }
+
   const fixtureFiles = readdirSync(fixturesDir).filter((file) => file.endsWith(".jsonl"));
   fixtureFiles.sort().forEach(validateFile);
 
@@ -145,6 +187,40 @@ function main() {
   }
 
   console.log("[ok] Cassandra goldset fixtures passed schema validation.");
+  console.log(
+    `[summary] cases=${stats.cases.size} records=${stats.totalRecords} facts=${stats.facts} rulehits=${stats.rulehits}`
+  );
+  if (stats.ruleHitCounts.size > 0) {
+    const ruleCoverage = Array.from(stats.ruleHitCounts.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([rule, count]) => `${rule}:${count}`)
+      .join(", ");
+    console.log(`[summary] rule coverage ${ruleCoverage}`);
+  }
+
+  if (reportPath) {
+    const report = {
+      timestamp: new Date().toISOString(),
+      cases: Array.from(stats.cases.values()).sort(),
+      totals: {
+        records: stats.totalRecords,
+        facts: stats.facts,
+        rulehits: stats.rulehits
+      },
+      ruleHitCounts: Object.fromEntries(stats.ruleHitCounts)
+    };
+    writeReport(reportPath, report);
+    console.log(`[summary] report written to ${reportPath}`);
+  }
 }
 
 main();
+
+function writeReport(path: string, data: unknown) {
+  try {
+    mkdirSync(dirname(path), { recursive: true });
+    writeFileSync(path, JSON.stringify(data, null, 2), "utf-8");
+  } catch (error) {
+    console.warn(`[warn] failed to write report to ${path}: ${(error as Error).message}`);
+  }
+}

@@ -1,0 +1,1 @@
+{"caseId":"CASS-28","type":"RuleHit","ruleId":"BULK_DELETE_TOMBSTONES","severity":"medium","message":"Bulk DELETE generates excessive tombstones","evidence":{"job":"DeleteOldSessionsJob","batchSize":5000,"strategy":"scheduled-window"}}

@@ -1,0 +1,1 @@
+{"caseId":"CASS-21","type":"RuleHit","ruleId":"NO_TIMEOUT","severity":"medium","message":"Statement executed without read timeout configuration","evidence":{"cql":"SELECT * FROM ks.export_queue WHERE tenant_id = ?"}}

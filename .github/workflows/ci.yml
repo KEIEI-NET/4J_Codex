@@ -1,0 +1,35 @@
+name: codex-ci
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build, test, and validate Cassandra goldset
+        run: npm run ci:verify
+
+      - name: Run pipeline dry-run (scanner → loader → indexer → rules)
+        run: npm run ci:pipeline
+
+      - name: Upload Cassandra report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cassandra-report
+          path: tmp/cassandra-report.json

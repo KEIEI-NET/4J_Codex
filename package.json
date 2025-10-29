@@ -11,7 +11,12 @@
     "build": "npm run -w packages/scanner build",
     "test": "npm run lint && npm run unit",
     "lint": "npm run -w packages/scanner lint",
-    "unit": "npm run -w packages/scanner test"
+    "unit": "npm run -w packages/scanner test",
+    "ci:build": "npm run -w packages/scanner build && npm run -w packages/ir-normalizer build && npm run -w @codex/rules-engine build && npm run -w packages/graph-loader build && npm run -w packages/search-indexer build",
+    "ci:test": "npm run lint && npm run unit && npm run -w packages/ir-normalizer test && npm run -w @codex/rules-engine test && npm run -w packages/graph-loader test && npm run -w packages/search-indexer test",
+    "ci:goldset": "npm run -w @codex/rules-engine validate:cassandra",
+    "ci:verify": "npm run ci:build && npm run ci:test && npm run ci:goldset",
+    "ci:pipeline": "scripts/run-pipeline-ci.mjs"
   },
   "devDependencies": {
     "@types/minimist": "^1.2.5",
@@ -19,5 +24,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.4.0",
     "vitest": "^1.5.0"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.56.1"
   }
 }

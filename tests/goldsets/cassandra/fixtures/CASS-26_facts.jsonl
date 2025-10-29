@@ -1,0 +1,2 @@
+{"caseId":"CASS-26","type":"DBQuery","origin":{"file":"src/search/UserSearchDao.java","line":188},"payload":{"cql":"SELECT * FROM ks.users WHERE token(user_id) > token(?) ALLOW FILTERING","operation":"SELECT","allowFiltering":true,"parameters":["user_id"],"predicates":[{"column":"token(user_id)","operator":">","value":"token(?)"}]}}
+{"caseId":"CASS-26","type":"TableSchema","payload":{"keyspace":"ks","table":"users","partitionKeys":["tenant_id"],"clusteringKeys":["user_id"]}}

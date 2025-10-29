@@ -6,6 +6,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "validate:cassandra": "npm run build --silent && node dist/scripts/validate-cassandra.js",
+    "report:cassandra": "npm run build --silent && node dist/scripts/validate-cassandra.js --report tmp/cassandra-report.json",
     "test": "vitest run"
   },
   "dependencies": {

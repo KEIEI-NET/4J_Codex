@@ -1,0 +1,1 @@
+{"caseId":"CASS-27","type":"RuleHit","ruleId":"MISSING_PK","severity":"critical","message":"Partition keys tenant_id missing from WHERE clause","evidence":{"table":"events","missingKeys":["tenant_id"]}}

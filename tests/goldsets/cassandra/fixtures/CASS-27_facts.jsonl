@@ -1,0 +1,2 @@
+{"caseId":"CASS-27","type":"DBQuery","origin":{"file":"src/tenant/TenantAuditDao.java","line":64},"payload":{"cql":"SELECT * FROM ks.events WHERE user_id = ? AND ts > ?","operation":"SELECT","parameters":["user_id","ts"]}}
+{"caseId":"CASS-27","type":"TableSchema","payload":{"keyspace":"ks","table":"events","partitionKeys":["tenant_id","user_id"],"clusteringKeys":["ts"]}}

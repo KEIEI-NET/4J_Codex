@@ -43,12 +43,12 @@
   - Cassandra / Elasticsearch の実リポジトリから抽出したサンプルセットを整備し、CI で検証できるようにする。
 
 - **Graph Loader / OpenSearch Indexer**
-  - Neo4j へのロードスクリプト、OpenSearch インデクサの初期実装。
-  - CI/CD パイプラインと連動した実行手順。
+  - Neo4j へのロードスクリプト、OpenSearch インデクサの初期実装。→ CLI が Neo4j/Bulk API への書き込みと CSV エクスポート・インデックス自動生成に対応。
+  - CI/CD パイプラインと連動した実行手順。→ `ci:verify` + `ci:pipeline` ワークフローで Loader/Indexer/Rules を乾燥ランし、Cassandra レポートをアーティファクト化。
 
 - **ルールエンジン・UI など L1 以降の機能**
   - TypeScript / Go / C# 解析器は L1（記号抽出・呼び出し検出）まで実装済み。今後は DI / DB クエリなど領域固有の Facts 拡張が必要。
-  - UI、Graph API などは未実装。
+  - Graph API / React UI は Fastify + Vite + Cytoscape 構成で検索・グラフ描画を提供。Neo4j / OpenSearch が未設定の場合はスタブで応答する。
 
 ## 参考リソース
 - `README.md` — セットアップとクイックスタート。

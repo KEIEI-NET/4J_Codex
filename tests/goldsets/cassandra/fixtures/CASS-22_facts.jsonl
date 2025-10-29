@@ -1,0 +1,2 @@
+{"caseId":"CASS-22","type":"RetryPolicy","origin":{"file":"src/common/CassandraConfig.java","line":41},"payload":{"policyClass":"AggressiveRetryPolicy","onWriteTimeout":"retry","maxAttempts":4}}
+{"caseId":"CASS-22","type":"Mutation","origin":{"file":"src/orders/OrderWriter.java","line":78},"payload":{"operation":"INSERT","table":"ks.orders","idempotent":false}}

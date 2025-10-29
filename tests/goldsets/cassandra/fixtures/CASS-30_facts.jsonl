@@ -1,0 +1,2 @@
+{"caseId":"CASS-30","type":"ExecutionConfig","origin":{"file":"src/report/NestedLookupService.java","line":58},"payload":{"pageSize":null,"statement":"FETCH_USER_ACTIVITY"}}
+{"caseId":"CASS-30","type":"DBQuery","origin":{"file":"src/report/NestedLookupService.java","line":61},"payload":{"cql":"SELECT * FROM ks.user_activity WHERE tenant_id = ?","operation":"SELECT","parameters":["tenant_id"]}}

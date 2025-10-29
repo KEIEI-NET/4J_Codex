@@ -1,0 +1,1 @@
+{"caseId":"CASS-25","type":"LwtUsage","origin":{"file":"src/signup/RegistrationService.java","line":104},"payload":{"table":"ks.registration_tokens","lwtPerSecond":640,"lwtToTotalRatio":0.72,"sampleWindowSeconds":60}}

@@ -68,6 +68,12 @@
 | Java 解析 | `packages/parsers/java/bin/parsers-java parse --in ./tmp/files.jsonl --out ./tmp/facts.jsonl --max-files 100 --opts '{"repoRoot":"./proj"}'` |
 | IR 正規化 | `packages/ir-normalizer/bin/ir-normalizer normalize --in ./tmp/facts.jsonl --out ./tmp/ir.jsonl --strict` |
 | テスト | `npm run -w packages/scanner test`, `mvn -f packages/parsers/java/pom.xml test`, `npm run -w packages/ir-normalizer test` |
+| CI 検証 | `npm run ci:verify` |
+| Graph Loader | `packages/graph-loader/bin/graph-loader --in ./tmp/ir.jsonl --neo4j-uri bolt://... --neo4j-user neo4j --neo4j-password **** --dry-run=false` |
+| Search Indexer | `packages/search-indexer/bin/search-indexer --in ./tmp/ir.jsonl --endpoint http://localhost:9200 --username admin --password **** --dry-run=false` |
+| Graph API | `npm run -w @codex/api dev` |
+| React UI | `npm run -w @codex/ui dev` |
+| UI E2E | `npm run -w @codex/ui test:e2e` |
 
 ---
 

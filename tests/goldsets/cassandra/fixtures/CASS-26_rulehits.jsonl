@@ -1,0 +1,2 @@
+{"caseId":"CASS-26","type":"RuleHit","ruleId":"ALLOW_FILTERING","severity":"critical","message":"ALLOW FILTERING on users without partition predicates","evidence":{"cql":"SELECT * FROM ks.users WHERE token(user_id) > token(?) ALLOW FILTERING"}}
+{"caseId":"CASS-26","type":"RuleHit","ruleId":"MISSING_PK","severity":"critical","message":"Partition keys tenant_id missing from WHERE clause","evidence":{"table":"users","missingKeys":["tenant_id"]}}
