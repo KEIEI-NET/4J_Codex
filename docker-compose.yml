@@ -64,7 +64,7 @@ services:
       - codex
 
   api:
-    image: node:20
+    image: node:24
     container_name: codex-api
     profiles: ["app"]
     working_dir: /workspace
@@ -85,7 +85,7 @@ services:
       - codex
 
   ui:
-    image: node:20
+    image: node:24
     container_name: codex-ui
     profiles: ["ui"]
     working_dir: /workspace
@@ -102,7 +102,7 @@ services:
       - codex
 
   worker:
-    image: node:20
+    image: node:24
     container_name: codex-worker
     profiles: ["worker"]
     working_dir: /workspace
